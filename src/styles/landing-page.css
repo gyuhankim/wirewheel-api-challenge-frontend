@@ -1,0 +1,55 @@
+.home {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.search-bar {
+  margin: 10px 0;
+}
+
+.gif-container {
+  margin: 10px 0;
+}
+
+img {
+  height: 300px;
+}
+
+@media (max-width: 1280px) {
+
+  .home {
+    width: 60%;
+  }
+
+  img {
+    height: 300px;
+  }
+
+}
+
+@media (max-width: 980px) {
+
+  .home {
+    width: 70%;
+  }
+
+  img {
+    height: 250px;
+  }
+
+}
+
+@media (max-width: 480px) {
+
+  .home {
+    width: 90%;
+  }
+
+  img {
+    height: 200px;
+  }
+
+}

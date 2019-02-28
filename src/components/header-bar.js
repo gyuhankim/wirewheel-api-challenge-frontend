@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 import {clearAuth} from '../actions/auth';
 import {clearAuthToken} from '../local-storage';
 
+import '../styles/header-bar.css';
+
 export class HeaderBar extends React.Component {
     logOut() {
         this.props.dispatch(clearAuth());
@@ -12,14 +14,16 @@ export class HeaderBar extends React.Component {
     render() {
         // Only render the log out button if we are logged in
         let logOutButton;
+
         if (this.props.loggedIn) {
             logOutButton = (
                 <button onClick={() => this.logOut()}>Log out</button>
             );
         }
+
         return (
             <div className="header-bar">
-                <h1>Foo App</h1>
+                <h1>GIPHY VIEWER</h1>
                 {logOutButton}
             </div>
         );
@@ -27,7 +31,8 @@ export class HeaderBar extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    loggedIn: state.auth.currentUser !== null
+    loggedIn: state.auth.currentUser !== null,
+    gifs: state.gifs.gifs
 });
 
 export default connect(mapStateToProps)(HeaderBar);
