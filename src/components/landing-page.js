@@ -1,15 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-// import {Link, Redirect} from 'react-router-dom';
-import {fetchGifs, updateSearchTerm} from '../actions/gifs';
+import {Link} from 'react-router-dom';
+import {fetchGifs, updateSearchTerm, saveFavorite} from '../actions/gifs';
 
 import '../styles/landing-page.css';
 
 export class LandingPage extends React.Component {
-
-    componentDidMount() {
-
-    }
 
     handleInputChange(e) {
         this.props.dispatch(updateSearchTerm(e.target.value));
@@ -19,6 +15,14 @@ export class LandingPage extends React.Component {
         e.preventDefault();
         this.props.dispatch(fetchGifs(this.props.gifs.searchTerm));
     }
+
+    handleFavoriteClick(url) {
+        if (this.props.loggedIn) {
+            this.props.dispatch(saveFavorite(this.props.loggedIn.username, url))
+        } else {
+            window.location.replace("/login");
+        }
+    }
     
     render() {
         let gifEmbeds;
@@ -27,7 +31,8 @@ export class LandingPage extends React.Component {
             gifEmbeds = this.props.gifs.gifs.map((gif, index) => {
                 return (
                     <div className="gif-container" key={index} >
-                        <img src={gif} alt="some-gif" />
+                        <img className="gif" src={gif} alt="giphy-gif" />
+                        <button className="favorite-button" onClick={() => this.handleFavoriteClick(gif)}>Favorite</button>
                     </div>
                 )
             })
@@ -35,17 +40,17 @@ export class LandingPage extends React.Component {
 
         return (
             <div className="home">
-    
-                {/* <h2>Welcome to Foo App</h2>
-                <LoginForm />
-                <Link to="/register">Register</Link> */}
+
+                <div className="nav">
+                    <Link className="nav-link" to={this.props.loggedIn ? "/favorites" : "/login"}>Favorites</Link>
+                    <Link className="nav-link" to="/login">Login</Link>
+                </div>
                 
                 <div className="search-bar">
                     <form onSubmit={(e) => this.handleSearchSubmit(e)}>
                         <input onChange={e => this.handleInputChange(e)} />
                         <button type="submit">Search</button>
                     </form>
-                    
                 </div> 
     
                 {gifEmbeds}
@@ -57,7 +62,7 @@ export class LandingPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    // loggedIn: state.auth.currentUser !== null
+    loggedIn: state.auth.currentUser,
     gifs: state.gifs
 });
 

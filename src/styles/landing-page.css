@@ -7,15 +7,33 @@
 }
 
 .search-bar {
-  margin: 10px 0;
+  margin: 20px 0;
 }
 
 .gif-container {
   margin: 10px 0;
 }
 
+.gif, .favorite-button {
+  display: block;
+}
+
+.favorite-button {
+  margin: 10px auto;
+}
+
 img {
   height: 300px;
+}
+
+.nav {
+  margin: 10px auto;
+  font-weight: bold;
+  color: black;
+}
+
+.nav-link {
+  display: block;
 }
 
 @media (max-width: 1280px) {

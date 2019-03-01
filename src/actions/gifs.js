@@ -19,7 +19,7 @@ export const updateSearchTerm = searchTerm => ({
   searchTerm
 })
 
-export const fetchGifs = searchTerm => (dispatch) => {
+export const fetchGifs = searchTerm => dispatch => {
 
   return fetch(`${API_BASE_URL}/giphy`, {
     method: 'POST',
@@ -31,6 +31,38 @@ export const fetchGifs = searchTerm => (dispatch) => {
   .then(res => normalizeResponseErrors(res))
   .then(res => res.json())
   .then(gifs => dispatch(fetchGifsSuccess(gifs)))
+  .catch(err => {
+    console.log(err);
+  })
+}
+
+export const SAVE_FAVORITE_SUCCESS = 'SAVE_FAVORITE_SUCCESS';
+export const saveFavoriteSuccess = favorites => ({
+  type: SAVE_FAVORITE_SUCCESS,
+  favorites
+})
+
+export const SAVE_FAVORITE_ERROR = 'SAVE_FAVORITE_ERROR';
+export const saveFavoriteError = error => ({
+  type: SAVE_FAVORITE_ERROR,
+  error
+})
+
+export const saveFavorite = (username, favorite) => (dispatch, getState) => {
+
+  const authToken = getState().auth.authToken;
+
+  return fetch(`${API_BASE_URL}/giphy/favorites`, {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      Authorization: `Bearer ${authToken}`
+    },
+    body: JSON.stringify({ username, favorite })
+  })
+  .then(res => normalizeResponseErrors(res))
+  .then(res => res.json())
+  .then(favorites => dispatch(saveFavoriteSuccess(favorites)))
   .catch(err => {
     console.log(err);
   })

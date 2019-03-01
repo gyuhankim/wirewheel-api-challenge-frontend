@@ -1,0 +1,15 @@
+.favorites-page {
+  width: 100%;
+  text-align: center;
+}
+
+.favorites {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.favorite-container {
+  flex: 1 1 25%;
+}
